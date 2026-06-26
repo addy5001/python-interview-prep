@@ -9,8 +9,8 @@ class ListNode:
 
 
 class LinkedList(MutableSequence):
-    def __init__(self) -> None:
-        self.head: ListNode | None = None
+    def __init__(self, head: ListNode | None = None) -> None:
+        self.head = head
         self.size = 0
 
     def __len__(self) -> int:
@@ -107,3 +107,28 @@ class LinkedList(MutableSequence):
 
         yield from self._reverse(node.next)
         yield node
+
+    def reverse(self) -> None:
+        prev = None
+        curr = self.head
+
+        while curr is not None:
+            next_node = curr.next
+            curr.next = prev
+            prev = curr
+            curr = next_node
+
+        self.head = prev
+
+    def clone(self) -> LinkedList | None:
+        clone = LinkedList()
+        iterator = self.head
+
+        for index in range(self.size):
+            if iterator is None:
+                break
+
+            clone.insert(index, iterator.data)
+            iterator = iterator.next
+
+        return clone

@@ -127,6 +127,43 @@ class TestLinkedList(unittest.TestCase):
         ll.reversed()
         self.assertEqual(list(ll), [10, 20, 30])
 
+    def test_reverse_empty(self):
+        ll = LinkedList()
+        ll.reverse()
+        self.assertEqual(list(ll), [])
+        self.assertEqual(len(ll), 0)
+
+    def test_reverse_single_element(self):
+        ll = LinkedList()
+        ll.insert(0, 10)
+        ll.reverse()
+        self.assertEqual(list(ll), [10])
+        self.assertEqual(len(ll), 1)
+
+    def test_reverse_multiple_elements(self):
+        ll = LinkedList()
+        for v in [10, 20, 30]:
+            ll.insert(len(ll), v)
+        ll.reverse()
+        self.assertEqual(list(ll), [30, 20, 10])
+        self.assertEqual(len(ll), 3)
+
+    def test_clone_empty(self):
+        ll = LinkedList()
+        cloned = ll.clone()
+        self.assertEqual(list(cloned), [])
+        self.assertEqual(len(cloned), 0)
+        self.assertIsNot(cloned, ll)
+
+    def test_clone_multiple(self):
+        ll = LinkedList()
+        for v in [10, 20, 30]:
+            ll.insert(len(ll), v)
+        cloned = ll.clone()
+        self.assertEqual(list(cloned), [10, 20, 30])
+        self.assertEqual(len(cloned), 3)
+        self.assertIsNot(cloned, ll)
+
 
 if __name__ == "__main__":
     unittest.main()
