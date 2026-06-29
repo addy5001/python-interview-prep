@@ -55,3 +55,11 @@ class ArrayOperations:
             return front
         else:
             return front + 1
+
+    def removeElement_2(self, nums: list[int], val: int) -> int:
+        k = 0  # Pointer for where to write the next valid element
+        for num in nums:
+            if num != val:
+                nums[k] = num
+                k += 1
+        return k
