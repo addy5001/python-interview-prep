@@ -1,3 +1,6 @@
+import collections
+
+
 class ArrayOperations:
     def __init__(self) -> None:
         pass
@@ -63,3 +66,79 @@ class ArrayOperations:
                 nums[k] = num
                 k += 1
         return k
+
+    # Given an array nums of size n, return the majority element.
+    # The majority element is the element that appears more than ⌊n / 2⌋ times in the array. You may assume that the majority element always exists in the array.
+    def majorityElement(self, nums: list[int]) -> int:
+        n = len(nums)
+        majority_index = {}
+        for num in nums:
+            majority_index[num] = majority_index.get(num, 0) + 1
+            if majority_index[num] > n / 2:
+                return num
+
+        raise ValueError("No majority element")
+
+    def majorityElementBoyerMooreVoting(self, nums: list[int]) -> int:
+        if not nums:
+            raise ValueError("No majority element")
+
+        candidate, counter = nums[0], 0
+        if len(nums) == 1:
+            return candidate
+
+        for num in nums[1:]:
+            if num == candidate:
+                counter += 1
+            else:
+                if counter == 0:
+                    candidate = num
+                else:
+                    counter -= 1
+        return candidate
+
+    def reverseString(self, s: list[str]) -> None:
+        """
+        Do not return anything, modify s in-place instead.
+        """
+        front, rear = 0, len(s) - 1
+        while front < rear:
+            s[front], s[rear] = s[rear], s[front]
+            front += 1
+            rear -= 1
+
+    def merge(self, nums1: list[int], m: int, nums2: list[int], n: int) -> None:
+        """
+        Do not return anything, modify nums1 in-place instead.
+        """
+        pass
+
+    # sorted list
+    def removeDuplicates(self, nums: list[int]) -> int:
+        if not nums:
+            return 0
+
+        k = 1
+        for index in range(1, len(nums)):
+            if nums[index] != nums[index - 1]:
+                nums[k] = nums[index]
+                k += 1
+
+        return k
+
+    # valid parentheses
+    def isValid(self, s: str) -> bool:
+        if not s:
+            return True
+
+        validity = {"]": "[", "}": "{", ")": "("}
+        stack = collections.deque()
+        for c in s:
+            if c in validity:
+                top = stack.pop() if stack else "#"
+                if top != validity[c]:
+                    return False
+            else:
+                stack.append(c)
+
+        return not stack

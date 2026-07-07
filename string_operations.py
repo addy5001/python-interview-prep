@@ -47,3 +47,45 @@ class StringOperations:
             lcp.append(char)
 
         return "".join(lcp)
+
+    def reverseString(self, s: list[str]) -> None:
+        """
+        Do not return anything, modify s in-place instead.
+        """
+        front, rear = 0, len(s) - 1
+        while front < rear:
+            s[front], s[rear] = s[rear], s[front]
+            front += 1
+            rear -= 1
+
+    def isPalindrome(self, s: str) -> bool:
+        front, rear = 0, len(s) - 1
+        while front < rear:
+            while front < rear and not str.isalnum(s[front]):
+                front += 1
+
+            while front < rear and not str.isalnum(s[rear]):
+                rear -= 1
+
+            if str.upper(s[front]) != str.upper(s[rear]):
+                return False
+            else:
+                front += 1
+                rear -= 1
+
+        return True
+
+    def mergeAlternately(self, word1: str, word2: str) -> str:
+        w1_index, w2_index = 0, 0
+        merged = []
+
+        while w1_index < len(word1) and w2_index < len(word2):
+            merged.append(word1[w1_index])
+            merged.append(word2[w2_index])
+            w1_index += 1
+            w2_index += 1
+
+        merged.append(word1[w1_index:])
+        merged.append(word2[w2_index:])
+
+        return "".join(merged)
